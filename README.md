@@ -1,0 +1,1 @@
+ [![npm](https://img.shields.io/npm/v/@blinkmobile/angularjs-draft-queue.svg?maxAge=2592000)](https://www.npmjs.com/package/@blinkmobile/angularjs-draft-queue)
