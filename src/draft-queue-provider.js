@@ -32,9 +32,9 @@ function draftQueueProvider () {
     }
 
     const service = {
-      save: function (model, formName) {
+      setItem: function (model, formName) {
         if (model._uuid) {
-          return service.get(model._uuid).then((data) => {
+          return lf.getItem(model._uuid).then((data) => {
             // has not been saved as a draft
             if (!data) {
               return lf.setItem(model._uuid, createDraft(model, formName))
@@ -56,11 +56,11 @@ function draftQueueProvider () {
         return lf.setItem(model._uuid, createDraft(model, formName))
       },
 
-      load: function (uuid) {
+      getItem: function (uuid) {
         return lf.getItem(uuid)
       },
 
-      remove: function (uuid) {
+      removeItem: function (uuid) {
         return lf.removeItem(uuid)
       },
 
