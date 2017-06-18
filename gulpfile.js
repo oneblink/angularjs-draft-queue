@@ -109,6 +109,6 @@ gulp.task('build-prod', ['clean'], () => {
   return makeBundle(ENTRY_POINT, FILENAME)
 })
 
-gulp.task('default', ['clean', 'build', 'test-single-run'], () => {})
+gulp.task('default', ['clean', 'build-prod', 'test-single-run'], () => {})
 
 gulp.task('build', ['clean', 'build-prod', 'minify'])
