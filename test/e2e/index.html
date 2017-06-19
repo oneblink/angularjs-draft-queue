@@ -18,13 +18,39 @@
         <label for="select">Select box</label>
         <select name="select"
                 ng-model="$ctrl.model.select">
-                <option valu="select 1">Select 1</option>
-                <option valu="select 2">Select 2</option>
+                <option value=""></option>
+                <option value="select 1">Select 1</option>
+                <option value="select 2">Select 2</option>
         </select>
+        <button id="save-draft" ng-click="$ctrl.saveDraft($ctrl.model)">Save draft</button>
       </form>
-      <p id="last-saved">{{$ctrl.lastSaved}}</p>
       <br />
-      <button id="save-draft" ng-click="$ctrl.saveDraft($ctrl.model)">Save draft</button>
+
+      <p id="last-saved">{{$ctrl.lastSaved}}</p>
+      <form ng-submit="$ctrl.update($ctrl.model)">
+        <label for="text">Text</label>
+        <input name="text" ng-model="$ctrl.draftItem.model.text" />
+        <br />
+        <br />
+        <label for="select">Select box</label>
+        <select name="select"
+                ng-model="$ctrl.draftItem.model.select">
+                <option value="select 1">Select 1</option>
+                <option value="select 2">Select 2</option>
+        </select>
+        <br/><br/>
+        <label for="date-created">Date Created:</label>
+        <input name="date-created" type="datetime" ng-model="$ctrl.draftItem.dateCreated" />
+        <br/><br/>
+        <label for="date-modified">Date Modified:</label>
+        <input name="date-modified" type="datetime" ng-model="$ctrl.draftItem.dateModified" />
+        <br/><br/>
+        <label for="form-name">Form Name</label>
+        <input name="form-name" ng-model="$ctrl.draftItem.form" />
+        <br />
+        <br />
+        <button id="update-draft" ng-click="$ctrl.updateDraft($ctrl.draftItem)">Save draft</button>
+      </form>
 
     </div>
   </body>
