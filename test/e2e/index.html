@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script src="../../node_modules/angular/angular.js"></script>
+    <script src="../../node_modules/angular-mocks/angular-mocks.js"></script>
+    <script type="text/javascript" src="../../node_modules/localforage/dist/localforage.js"></script>
+    <script type="text/javascript" src="../../node_modules/angular-localforage/dist/angular-localForage.js"></script>
+    <script src="../../dist/bm-angularjs-draft-queue.js"></script>
+    <script src="./index.js"></script>
+  </head>
+  <body>
+    <div ng-controller="testCtrl as $ctrl">
+      <form ng-submit="$ctrl.submit($ctrl.model)">
+        <label for="text">Text</label>
+        <input name="text" ng-model="$ctrl.model.text" />
+        <br />
+        <br />
+        <label for="select">Select box</label>
+        <select name="select"
+                ng-model="$ctrl.model.select">
+                <option valu="select 1">Select 1</option>
+                <option valu="select 2">Select 2</option>
+        </select>
+      </form>
+      <p id="last-saved">{{$ctrl.lastSaved}}</p>
+      <br />
+      <button id="save-draft" ng-click="$ctrl.saveDraft($ctrl.model)">Save draft</button>
+
+    </div>
+  </body>
+</html>

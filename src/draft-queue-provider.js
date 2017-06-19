@@ -33,6 +33,14 @@ function draftQueueProvider () {
 
     const service = {
       setItem: function (model, formName) {
+        if (!model) {
+          throw new Error('model must be defined')
+        }
+
+        if (!formName) {
+          throw new Error('formName must be defined')
+        }
+
         if (model._uuid) {
           return lf.getItem(model._uuid).then((data) => {
             // has not been saved as a draft

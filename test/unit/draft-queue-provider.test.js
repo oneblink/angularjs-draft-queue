@@ -48,13 +48,10 @@ describe('Draft Queue Service', () => {
 
     describe('When not configured', () => {
       it('should throw an error', () => {
-        try {
-          inject((_draftQueue_) => { // eslint-disable-line no-unused-vars
-            fail('Should of thrown an error')
-          })
-        } catch (e) {
-          expect(e.message).toBe('You must specify an appName in your applications .config function before using this service')
-        }
+        // eslint-disable-next-line no-unused-vars
+        expect(() => inject((_draftQueue_) => {}))
+          .toThrowError('You must specify an appName in your applications .config function before using this service')
+
       })
     })
 
@@ -62,10 +59,11 @@ describe('Draft Queue Service', () => {
       let draftQueue
       beforeEach(() => draftQueueProvider.config({appName: 'test'}))
 
-      it('should not throw an error when getting the service', () => {
+      it('should not throw an error when getting the service', (done) => {
        try {
           inject((_draftQueue_) => {
             expect(_draftQueue_).not.toBeUndefined()
+            done()
           })
         } catch (e) {
           fail(e)
@@ -123,6 +121,11 @@ describe('Draft Queue Service', () => {
                 expect(result.model._uuid).toBe(existingDraft.model._uuid)
                 done()
               })
+            })
+
+            it('should throw if no parameters are specified', () => {
+              expect(draftQueue.setItem).toThrowError('model must be defined')
+              expect(() => draftQueue.setItem({test: 'hello'})).toThrowError('formName must be defined')
             })
           })
         })
