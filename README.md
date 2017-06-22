@@ -28,7 +28,12 @@ angular.bootstrap(document, ['forms'])
 
 - `draftQueueList` - Component that displays the items saved in the pending queue
 - `bmDraftQueueService` - Service that wraps LocalForage to save data to the device in a specific format. Broadcasts events on `$rootScope`
+
 # bmDraftQueueService (service)
+
+# How it works
+
+AngularJS Draft Queue works by injecting a [HTTP Interceptor](src/draft-queue-interceptor.js) into the interceptors array. If a `POST` or `PUT` request with a Content Type header of `application/x-www-form-urlencoded` or `application/json` is successful, the corresponding entry in draft queue is removed.
 
 # Developing
 
