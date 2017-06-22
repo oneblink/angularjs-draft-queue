@@ -1,7 +1,6 @@
 'use strict'
 
 describe('http interceptor tests', () => {
-  const expectedFormName = 'testCtrl'
   const expectedText = 'expected text'
 
   let textbox
