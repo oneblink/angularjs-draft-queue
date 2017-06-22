@@ -42,7 +42,7 @@ function DraftQueueListController($scope, $q, $sce, $window, bmDraftQueueService
 
   $ctrl.getQueue = function() {
     if (fetching) {
-      return
+      return Promise.resolve()
     }
 
     fetching = true
@@ -51,8 +51,8 @@ function DraftQueueListController($scope, $q, $sce, $window, bmDraftQueueService
     return bmDraftQueueService.iterate((item) => {
       $ctrl.draftQueue.push(item)
     })
-    .then(() => fetching = false)
     .catch(() => $ctrl.draftQueue = oldQueue)
+    .then(() => fetching = false)
   }
 
   $ctrl.clear = function () {

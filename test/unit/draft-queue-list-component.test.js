@@ -62,17 +62,17 @@ describe('draft queue list controller', () => {
   it('should not lose the pending queue if there is a problem getting from storage', () => {
     const expectedQueue = 'one'
     const iterateSpy = jasmine.createSpy().and.returnValues(
-      (cb) => Promise.resolve(cb(expectedQueue)),
-      () => Promise.reject())
+      Promise.resolve(),
+      Promise.reject())
 
     locals.$window = {confirm: () => true},
     locals.bmDraftQueueService = {
       iterate: iterateSpy
     }
 
-
     const $ctrl = $componentController('draftQueueList', locals)
-    $ctrl.$onInit()
+
+    $ctrl.draftQueue = [expectedQueue]
     $ctrl.getQueue()
       .then(() => {
         expect(iterateSpy.toHaveBeenCalledTimes(2))

@@ -6,7 +6,7 @@ A tiny wrapper around [Angular LocalForage](https://github.com/ocombe/angular-lo
 
 `npm i --save @blinkmobile/angularjs-draft-queue`
 
-## Usage
+# Usage
 
 Include the script in your build/minification process or directly in HTML:
 
@@ -24,34 +24,11 @@ angular.module('forms', ['bmDraftQueue' /*... other deps */])
 angular.bootstrap(document, ['forms'])
 ```
 
-## API
+# Injectables
 
-### draftQueue (service)
-
-#### setItem(model, formName) => Promise() => model
-
-Saves or updates a model in the devices local storage. New models are saved with the following structure:
-
-```json
-{
-  model: {_uuid: '', /* ... form data */ },
-  form: formName,
-  dateCreated: createdDate,
-  dateModified: createdDate
-}
-```
-Updated models keep the original form name and date created.
-
-#### instance()
-
-Returns the [Angular LocalForage](https://github.com/ocombe/angular-localForage) instance used for the draft queue, should you need to access it directly
-
-#### getItem(uuid)
-#### removeItem(uuid)
-#### clear()
-
-The above methods passes the call to the corresponding methods in [Angular LocalForage](https://github.com/ocombe/angular-localForage#functions-)
-
+- `draftQueueList` - Component that displays the items saved in the pending queue
+- `bmDraftQueueService` - Service that wraps LocalForage to save data to the device in a specific format. Broadcasts events on `$rootScope`
+# bmDraftQueueService (service)
 
 # Developing
 

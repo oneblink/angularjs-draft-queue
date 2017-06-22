@@ -1,24 +1,9 @@
 'use strict'
 
-const EC = protractor.ExpectedConditions
-
-function selectDropdownByNumber(element, index) {
-  return element.all(by.tagName('option'))
-    .then(function(options) {
-      options[index].click();
-    })
-}
-
 describe('List Component tests', () => {
-  const expectedFormName = 'testCtrl'
-  const expectedText = 'expected text'
-  const expectedSelectValue = 'Select 1'
-
   let textbox
-  let selectbox
   let saveDraftButton
   let newDraftButton
-  let lastSaved
 
   let listComponent
   let list
@@ -28,12 +13,8 @@ describe('List Component tests', () => {
     browser.get('http://localhost:8000/test/e2e/index.html')
 
     textbox = element(by.model('$ctrl.model.text'))
-    selectbox = element(by.model('$ctrl.model.select'))
     saveDraftButton = element(by.id('save-draft'))
     newDraftButton = element(by.id('new-draft'))
-
-    lastSaved = element(by.id('last-saved'))
-
     listComponent = element(by.tagName('draft-queue-list'))
     list = element.all(by.repeater('item in DraftQueueListCtrl.draftQueue'))
     clearList = element(by.className('bm-draft-queue__clear'))
