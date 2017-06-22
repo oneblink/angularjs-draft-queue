@@ -9,7 +9,8 @@ function draftQueueProvider () {
     _appName = appName
   }
 
-  this.$get = ['$localForage', 'uuidService', function ($localForage, uuid) {
+  this.$get = ['$rootScope', '$localForage', 'uuidService',
+  function ($rootScope, $localForage, uuid) {
     if (angular.isUndefined(_appName)) {
       throw new Error('You must specify an appName in your applications .config function before using this service')
     }
@@ -31,6 +32,12 @@ function draftQueueProvider () {
       return newDraft
     }
 
+    const broadcastSaveEvent = function (item) {
+      $rootScope.$broadcast('bmDraftQueueAdd', item)
+
+      return item
+    }
+
     const service = {
       setItem: function (model, formName) {
         if (!model) {
@@ -46,6 +53,7 @@ function draftQueueProvider () {
             // has not been saved as a draft
             if (!data) {
               return lf.setItem(model._uuid, createDraft(model, formName))
+                       .then(broadcastSaveEvent)
             }
 
             // update existing draft
@@ -57,11 +65,13 @@ function draftQueueProvider () {
             }
 
             return lf.setItem(model._uuid, updatedDraft)
+                     .then(broadcastSaveEvent)
           })
         }
 
         model._uuid = uuid()
         return lf.setItem(model._uuid, createDraft(model, formName))
+                 .then(broadcastSaveEvent)
       },
 
       getItem: function (uuid) {
@@ -69,11 +79,23 @@ function draftQueueProvider () {
       },
 
       removeItem: function (uuid) {
-        return lf.removeItem(uuid)
+        return lf.removeItem(uuid).then((item) => {
+          $rootScope.$broadcast('bmDraftQueueRemove', item)
+
+          return item
+        })
       },
 
       clear: function () {
         return lf.clear()
+      },
+
+      iterate: function (iter) {
+        return lf.iterate(iter)
+      },
+
+      length: function length() {
+        return lf.length()
       },
 
       instance: function () {

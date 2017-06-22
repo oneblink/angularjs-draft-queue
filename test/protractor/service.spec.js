@@ -9,7 +9,7 @@ function selectDropdownByNumber(element, index) {
     })
 }
 
-describe('Protractor tests', () => {
+describe('Draft Queue Service Tests', () => {
   const expectedFormName = 'testCtrl'
   const expectedText = 'expected text'
   const expectedSelectValue = 'Select 1'
@@ -26,20 +26,28 @@ describe('Protractor tests', () => {
   let updatedDateModified
   let updatedFormName
 
+  let clearList
+
   beforeEach(() => {
-    browser.get('http://localhost:8000/test/e2e/index.html')
+    return browser.get('http://localhost:8000/test/e2e/index.html')
+      .then(() => {
+        textbox = element(by.model('$ctrl.model.text'))
+        selectbox = element(by.model('$ctrl.model.select'))
+        saveDraftButton = element(by.id('save-draft'))
 
-    textbox = element(by.model('$ctrl.model.text'))
-    selectbox = element(by.model('$ctrl.model.select'))
-    saveDraftButton = element(by.id('save-draft'))
+        updatedTextbox = element(by.model('$ctrl.draftItem.model.text'))
+        updatedSelectbox = element(by.model('$ctrl.draftItem.model.select'))
+        updatedDateCreated = element(by.model('$ctrl.draftItem.dateCreated'))
+        updatedDateModified = element(by.model('$ctrl.draftItem.dateModified'))
+        updatedFormName = element(by.model('$ctrl.draftItem.form'))
 
-    updatedTextbox = element(by.model('$ctrl.draftItem.model.text'))
-    updatedSelectbox = element(by.model('$ctrl.draftItem.model.select'))
-    updatedDateCreated = element(by.model('$ctrl.draftItem.dateCreated'))
-    updatedDateModified = element(by.model('$ctrl.draftItem.dateModified'))
-    updatedFormName = element(by.model('$ctrl.draftItem.form'))
-
-    lastSaved = element(by.id('last-saved'))
+        lastSaved = element(by.id('last-saved'))
+        clearList = element(by.className('bm-draft-queue__clear'))
+        clearList.click()
+        // browser.executeScript('window.localforage.clear()')
+        // browser.executeScript('window.clearLF()')
+        return browser.waitForAngular()
+      })
   })
 
   it('should have the required setup', () => {
