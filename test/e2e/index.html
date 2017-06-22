@@ -6,6 +6,7 @@
     <script type="text/javascript" src="../../node_modules/localforage/dist/localforage.js"></script>
     <script type="text/javascript" src="../../node_modules/angular-localforage/dist/angular-localForage.js"></script>
     <script src="../../dist/bm-angularjs-draft-queue.js"></script>
+    <script src="./mock-backend.js"></script>
     <script src="./index.js"></script>
   </head>
   <body>
@@ -26,6 +27,7 @@
         <p>{{$ctrl.model._uuid ? "Model UUID: " + $ctrl.model._uuid : ''}}</p>
         <button id="save-draft" ng-click="$ctrl.saveDraft($ctrl.model)">Save draft</button>
         <button id="new-draft" ng-click="$ctrl.new()">new form</button>
+        <button id="send-draft" ng-click="$ctrl.send($ctrl.model)" ng-enabled="$ctrl.draftItem">Send</button>
       </form>
       <br />
 

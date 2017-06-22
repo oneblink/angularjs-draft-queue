@@ -1,6 +1,6 @@
 'use strict'
 
-const app = angular.module('app', ['bmDraftQueue'])
+const app = angular.module('app', ['bmDraftQueue', 'mockBackend'])
 
 app.config(['bmDraftQueueServiceProvider', function (draftQueueProvider) {
   draftQueueProvider.config({appName: 'e2eTest'})
@@ -26,6 +26,10 @@ app.controller('testCtrl', ['$http', '$scope', '$timeout', '$log', 'bmDraftQueue
 
     $ctrl.load = function (item) {
       $ctrl.model = item
+    }
+
+    $ctrl.send = function (item) {
+      $http.post('/url', item)
     }
 
     $ctrl.new()

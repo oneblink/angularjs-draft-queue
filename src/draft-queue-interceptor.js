@@ -11,7 +11,7 @@ function draftQueueInteceptor($window, $q, bmDraftQueueService) {
 
   return {
     response: function DraftQueueResponse (response) {
-      if (!response.config || !isForm(response.config) || !response.config.data._uuid) {
+      if (!response.config || !isForm(response.config) || !response.config.data || !response.config.data._uuid) {
         return response
       }
 
