@@ -31,8 +31,8 @@ describe('Draft Queue Service', () => {
         return service
       }])
 
-      fakeModule.config((_draftQueueProvider_) => {
-        draftQueueProvider = _draftQueueProvider_
+      fakeModule.config((_bmDraftQueueServiceProvider_) => {
+        draftQueueProvider = _bmDraftQueueServiceProvider_
       })
 
       module('bmDraftQueue', 'config', 'LocalForageModule')
@@ -49,7 +49,7 @@ describe('Draft Queue Service', () => {
     describe('When not configured', () => {
       it('should throw an error', () => {
         // eslint-disable-next-line no-unused-vars
-        expect(() => inject((_draftQueue_) => {}))
+        expect(() => inject((_bmDraftQueueService_) => {}))
           .toThrowError('You must specify an appName in your applications .config function before using this service')
 
       })
@@ -61,8 +61,8 @@ describe('Draft Queue Service', () => {
 
       it('should not throw an error when getting the service', (done) => {
        try {
-          inject((_draftQueue_) => {
-            expect(_draftQueue_).not.toBeUndefined()
+          inject((_bmDraftQueueService_) => {
+            expect(_bmDraftQueueService_).not.toBeUndefined()
             done()
           })
         } catch (e) {
@@ -74,8 +74,8 @@ describe('Draft Queue Service', () => {
         beforeEach(() => {
           draftQueueProvider.config({appName: 'test'})
 
-          inject((_draftQueue_) => {
-            draftQueue = _draftQueue_
+          inject((_bmDraftQueueService_) => {
+            draftQueue = _bmDraftQueueService_
           })
         })
 
@@ -109,6 +109,21 @@ describe('Draft Queue Service', () => {
                 done()
               })
             })
+
+            it('should broadcast the `bmDraftQueueAdd` event', (done) => {
+              const expectedDraft = {}
+              $rootScope.$on('bmDraftQueueAdd', (e, result) => {
+                expect(result).not.toBeUndefined()
+                expect(result.form).toBe(expectedFormName)
+                expect(result.dateCreated).not.toBeUndefined()
+                expect(result.dateModified).toBe(result.dateCreated)
+                expect(result.model).toBe(expectedDraft)
+                expect(result.model._uuid).not.toBeUndefined()
+
+                done()
+              })
+              draftQueue.setItem(expectedDraft, expectedFormName)
+            })
           })
 
           describe('with a _uuid property', () => {
@@ -127,6 +142,32 @@ describe('Draft Queue Service', () => {
               expect(draftQueue.setItem).toThrowError('model must be defined')
               expect(() => draftQueue.setItem({test: 'hello'})).toThrowError('formName must be defined')
             })
+
+            it('should broadcast the `bmDraftQueueAdd` event', () => {
+              it('should update an existing draft', (done) => {
+                const draft = {_uuid: '1234'}
+                $rootScope.$on('bmDraftQueueAdd', (e, result) => {
+                  expect(result.form).toBe(expectedFormName)
+                  expect(result.dateCreated).toBe(existingDraft.dateCreated)
+                  expect(result.dateModified).not.toBe(existingDraft.dateCreated)
+                  expect(result.model._uuid).toBe(existingDraft.model._uuid)
+                  done()
+                })
+
+                draftQueue.setItem(draft, expectedFormName)
+              })
+            })
+          })
+        })
+
+        describe('when removing a draft', () => {
+          xit('should broadcast the `bmDraftQueueRemove` event', (done) => {
+            $rootScope.$on('bmDraftQueueRemove', (e, item) => {
+              expect(item).not.toBeUndefined()
+              done()
+            })
+
+            draftQueue.removeItem('xxxx-xxxx')
           })
         })
       })

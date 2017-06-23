@@ -2,14 +2,13 @@
 
 const app = angular.module('app', ['bmDraftQueue'])
 
-app.config(['draftQueueProvider', function (draftQueueProvider) {
+app.config(['bmDraftQueueServiceProvider', function (draftQueueProvider) {
   draftQueueProvider.config({appName: 'e2eTest'})
 }])
 
-app.controller('testCtrl', ['$http', '$scope', '$timeout', '$log', 'draftQueue',
+app.controller('testCtrl', ['$http', '$scope', '$timeout', '$log', 'bmDraftQueueService',
   function($http, $scope, $timeout, $log, draftQueue) {
     const $ctrl = this
-    $ctrl.model = {}
 
     $ctrl.saveDraft = function(model) {
       draftQueue.setItem(model, 'testCtrl').then((item) => {
@@ -20,6 +19,16 @@ app.controller('testCtrl', ['$http', '$scope', '$timeout', '$log', 'draftQueue',
         $ctrl.model = angular.copy(item.model)
       })
     }
+
+    $ctrl.new = function () {
+      $ctrl.model = {}
+    }
+
+    $ctrl.load = function (item) {
+      $ctrl.model = item
+    }
+
+    $ctrl.new()
   }
 ])
 

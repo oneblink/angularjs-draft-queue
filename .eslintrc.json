@@ -21,7 +21,8 @@
   "env": {
     "browser": true,
     "node": true,
-    "jasmine": true
+    "jasmine": true,
+    "es6": true
   },
   "globals": {
     "angular": true,
@@ -30,6 +31,7 @@
     "browser": true,
     "element": true,
     "by": true,
+    "createSpy": true,
     "triggerDigests": true,
     "stopDigests": true
   }

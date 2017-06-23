@@ -1,0 +1,17 @@
+{
+  "configuration": {
+    "status": "debug",
+    "ThresholdFilter": {
+      "level": "debug"
+    },
+    "appenders": {
+      "appender": [{
+        "type": "Console",
+        "name": "STDOUT",
+        "PatternLayout": {
+            "pattern": "%m%n"
+        }
+      }]
+    }
+  }
+}

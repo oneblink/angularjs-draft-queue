@@ -11,6 +11,7 @@
   <body>
     <div ng-controller="testCtrl as $ctrl">
       <form ng-submit="$ctrl.submit($ctrl.model)">
+        <h2>create new draft</h2>
         <label for="text">Text</label>
         <input name="text" ng-model="$ctrl.model.text" />
         <br />
@@ -22,12 +23,15 @@
                 <option value="select 1">Select 1</option>
                 <option value="select 2">Select 2</option>
         </select>
+        <p>{{$ctrl.model._uuid ? "Model UUID: " + $ctrl.model._uuid : ''}}</p>
         <button id="save-draft" ng-click="$ctrl.saveDraft($ctrl.model)">Save draft</button>
+        <button id="new-draft" ng-click="$ctrl.new()">new form</button>
       </form>
       <br />
 
       <p id="last-saved">{{$ctrl.lastSaved}}</p>
       <form ng-submit="$ctrl.update($ctrl.model)">
+        <h2>last saved draft</h2>
         <label for="text">Text</label>
         <input name="text" ng-model="$ctrl.draftItem.model.text" />
         <br />
@@ -52,6 +56,7 @@
         <button id="update-draft" ng-click="$ctrl.updateDraft($ctrl.draftItem)">Save draft</button>
       </form>
 
+      <draft-queue-list on-select-item="$ctrl.load(item)"></draft-queue-list>
     </div>
   </body>
 </html>
