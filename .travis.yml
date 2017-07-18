@@ -28,6 +28,7 @@ before_script:
 install:
   - npm install --global npm
   - npm install
+  - npm run webdriver-update
 script:
   - npm test
   - npm run test-e2e

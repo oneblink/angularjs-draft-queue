@@ -59,7 +59,8 @@
     "npm": ">=3"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "docs/"
   ],
   "homepage": "https://github.com/blinkmobile/angularjs-draft-queue",
   "keywords": [
@@ -84,7 +85,7 @@
     "eslint": "eslint --fix --cache .",
     "fixpack": "fixpack",
     "opn": "opn http://localhost:8000/test/e2e/index.html",
-    "postinstall": "webdriver-manager update",
+    "webdriver-update": "webdriver-manager update",
     "prepublishOnly": "gulp build",
     "pretest": "npm run eslint && npm run fixpack && npm run build",
     "protractor": "protractor test/protractor/conf.js",
