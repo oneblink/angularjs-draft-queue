@@ -1,7 +1,7 @@
 {
   "name": "@blinkmobile/angularjs-draft-queue",
   "description": "Offline storage of draft form submissions for AngularJS",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "author": "Blink Mobile Technologies",
   "bugs": "https://github.com/blinkmobile/angularjs-draft-queue/issues",
   "contributors": [
